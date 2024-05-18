@@ -1,5 +1,3 @@
-# Filename - server.py
- 
 # Import flask and datetime module for showing date and time
 from flask import Flask
 import datetime
