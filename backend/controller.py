@@ -6,6 +6,10 @@ api = Api(app)
 
 goals = {}
 
+class GoalList(Resource):
+    def get(self):
+        return goals
+
 class Goal(Resource):
     def get(self, goal_id):
         return {goal_id: goals[goal_id]}
@@ -15,6 +19,7 @@ class Goal(Resource):
 
          
 api.add_resource(Goal, '/<string:goal_id>')
+api.add_resource(GoalList, '/goals')
 
 
 if __name__ == '__main__':
