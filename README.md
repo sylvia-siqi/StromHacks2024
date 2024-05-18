@@ -1,2 +1,4 @@
-# StromHacks2024
- 
+# StormHacks2024
+ Tech stack:
+ Frontend: React
+ Backend: Flask
