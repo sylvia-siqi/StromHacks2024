@@ -1,4 +1,4 @@
-# StormHacks2024
+# StormHacks2024 - FitCat
+Reach your fitness and health goals and raise your own cat!
  Tech stack:
- Frontend: React
- Backend: Flask
+ React, Flask
