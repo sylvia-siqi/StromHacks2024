@@ -1,7 +1,7 @@
 # StormHacks2024 - FitCat
 Reach your fitness and health goals and raise your own cat! <br/>
  Tech stack:
- React, Flask <br/><br/>
+ React, Flask, SQLite <br/><br/>
 
 
 When installing: (installs all of the packages you need) <br/>
