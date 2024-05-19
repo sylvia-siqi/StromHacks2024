@@ -1,25 +1,52 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restful import Api, Resource
+import sqlite3
 
 app = Flask(__name__)
 api = Api(app)
 
-goals = {}
+def get_db_connection():
+    conn = sqlite3.connect('backend/database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
 
 class GoalList(Resource):
     def get(self):
-        return goals
+        json = request.get_json(force=True)
+        user_id = json['user_id']
 
-class Goal(Resource):
+        conn = get_db_connection()
+        goals = conn.execute('SELECT * FROM Goal WHERE user_id = user_id').fetchall()
+        conn.close()
+        
+        return goals
+    
+class GetGoal(Resource):
     def get(self, goal_id):
-        return {goal_id: goals[goal_id]}
-    def put(self, goal_id):
-        goals[goal_id] = request.form['data']
-        return {goal_id: goals[goal_id]}
+        conn = get_db_connection()
+        goals = conn.execute('SELECT * FROM Goal WHERE goal_id = goal_id').fetchall()
+        conn.close()
+        return goal_id # return {goal_id: goals[goal_id]}
+
+class CreateGoal(Resource):
+    def put(self):
+        json = request.get_json(force=True)
+        user_id = json['user_id']
+        goal_text = json['goal_text']
+        category = json['category']
+
+        conn = get_db_connection()
+        conn.execute('INSERT INTO Goal (user_id, goal_text, category) VALUES (?, ?, ?)',
+        (user_id, goal_text, category))
+        conn.commit()
+        conn.close()
+        return jsonify(user_id=user_id, goal_text=goal_text, category=category)
+        # return {goal_id: goals[goal_id], user_id: user_id, goal_text: goal_text, category: category}
 
          
-api.add_resource(Goal, '/<string:goal_id>')
+api.add_resource(GetGoal, '/goals/<string:goal_id>')
 api.add_resource(GoalList, '/goals')
+api.add_resource(CreateGoal, '/create_goal')
 
 
 if __name__ == '__main__':

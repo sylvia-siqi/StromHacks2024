@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS User
-DROP TABLE IF EXISTS Goal
-DROP TABLE IF EXISTS GoalHistory
+DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Goal;
+DROP TABLE IF EXISTS GoalHistory;
 
 CREATE TABLE User (
     user_id INTEGER PRIMARY KEY,
@@ -8,9 +8,9 @@ CREATE TABLE User (
 );
 
 CREATE TABLE Goal (
-    goal_id INTEGER PRIMARY KEY,
+    goal_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,    
-    date_created TIMESTAMP,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     goal_text TEXT,
     category TEXT NOT NULL,   
     FOREIGN KEY (user_id) REFERENCES User (id)
@@ -18,7 +18,7 @@ CREATE TABLE Goal (
 
 CREATE TABLE GoalHistory (
     instance_id INTEGER PRIMARY KEY,
-    [date] TIMESTAMP,
+    [date] TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     goal_id INTEGER,
     complete BOOLEAN DEFAULT "0",
     FOREIGN KEY (goal_id) REFERENCES Goal (id)
