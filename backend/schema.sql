@@ -20,6 +20,6 @@ CREATE TABLE GoalHistory (
     instance_id INTEGER PRIMARY KEY AUTOINCREMENT,
     [date] TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     goal_id INTEGER,
-    complete BOOLEAN DEFAULT "0",
+    complete BOOLEAN NOT NULL,
     FOREIGN KEY (goal_id) REFERENCES Goal (id)
 );

@@ -74,6 +74,19 @@ class CreateGoal(Resource):
         conn.commit()
         conn.close()
         return jsonify(user_id=user_id, goal_text=goal_text, category=category)
+    
+class CompleteGoal(Resource):
+    def put(self):
+        json = request.get_json(force=True)
+        goal_id = json['goal_id']
+        complete = json['complete']
+
+        conn = get_db_connection()
+        conn.execute('INSERT INTO GoalHistory (goal_id, complete) VALUES (?, ?)',
+        (goal_id, complete))
+        conn.commit()
+        conn.close()
+        return jsonify(goal_id=goal_id, complete=complete)
         
 
 api.add_resource(CreateUser, '/create_user')
@@ -81,6 +94,7 @@ api.add_resource(GetUser, '/user/<string:user_id>')
 api.add_resource(GetGoal, '/goals/<string:goal_id>')
 api.add_resource(GoalList, '/goals')
 api.add_resource(CreateGoal, '/create_goal')
+api.add_resource(CompleteGoal, '/complete_goal')
 
 
 if __name__ == '__main__':
