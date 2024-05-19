@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const Goal = ({ goal, onToggle }) => {
     const handleCheckboxChange = () => {
@@ -7,9 +6,9 @@ const Goal = ({ goal, onToggle }) => {
     };
   
     return (
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', fontSize:'1.5rem' }}>
+      <div key={goal.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', fontSize:'1.5rem' }}>
         <input
-          type="checkbox" class="largerCheckbox"
+          type="checkbox" className="largerCheckbox"
           checked={goal.completed}
           onChange={handleCheckboxChange}
           style={{ marginRight: '1rem' }}

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import "../index.css";
@@ -84,16 +83,14 @@ const getSleepDecor = (sleepStat) => {
 const Home = () => {
 
     const [userID, setUserID] = useState("");
-    const [user, setUser] = useState("");
-    const [goals, setGoals] = useState([]);
+    //const [user, setUser] = useState([]);
 
     const [sleepData, setSleepData] = useState(null);
     const [activeTimeData, setActiveTimeData] = useState(null);
     const [progress, setProgressData] = useState(0);
 
     async function getUser() {
-        console.log(`/user/${userID}`);
-        const response = await fetch(`/user/${userID}`, {
+        const response = await fetch(`/user/${localStorage.getItem('user_id')}`, {
             method: "POST",
             headers: {
                 'Content-Type' : 'application/json'
@@ -123,6 +120,9 @@ const Home = () => {
         if (response.ok){
             await response.json()
                 .then(data => setGoals(data))
+                .then(data => {console.log(data)})
+        } else {
+            console.log(response);
         }
     }
 
@@ -146,12 +146,15 @@ const Home = () => {
             fetchData();
         }
     }, []);
+        setUserID(localStorage.getItem('user_id'));
+        getUser();
+    }, [])
 
     return (
     <div>
-        <h1 class="body home accent-font margin-s ">FitCat</h1>
+        <h1 className="body home accent-font margin-s ">FitCat</h1>
         {/*display the cat*/}
-        <div class="body"> 
+        <div className="body"> 
             <h2>Welcome, {userID}</h2>
             <ProgressBar progress={progress} />
             <p>Complete goals to energize your cat !</p>
@@ -170,14 +173,6 @@ const Home = () => {
         </div>
 
         <GoalList />
-
-        <ul>
-            {
-                goals.map((goal) => (
-                    <li key={goal[0]}>CAT:{goal[4]} - ID:{goal[0]} - TIME:{goal[2]} - DESC:{goal[3]}</li>
-                ))
-            }
-        </ul>
     </div>
     );
   };

@@ -3,13 +3,14 @@ DROP TABLE IF EXISTS Goal;
 DROP TABLE IF EXISTS GoalHistory;
 
 CREATE TABLE User (
-    user_id INTEGER PRIMARY KEY,
+    user_id TEXT PRIMARY KEY,
+    cat_name TEXT DEFAULT "Kitty",
     cat_breed TEXT DEFAULT "Tabby"
 );
 
 CREATE TABLE Goal (
     goal_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,    
+    user_id TEXT,    
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     goal_text TEXT,
     category TEXT NOT NULL,   

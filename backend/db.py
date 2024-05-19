@@ -9,7 +9,7 @@ with open('backend/schema.sql') as f:
 cursor = connection.cursor()
 
 cursor.execute("INSERT INTO Goal (goal_id, user_id, goal_text, category) VALUES (?, ?, ?, ?)",
-            ('33', '1', "10k steps a day", "Steps"))
+            ('33', 'Test', "10k steps a day", "Steps"))
 
 connection.commit()
 connection.close()
