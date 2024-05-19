@@ -4,29 +4,26 @@ import { Link } from "react-router-dom";
 const Login = () => {
     const [input, setInput] = useState("");
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-
-        const username = { input };
-
-        console.log(username);
-        const response = fetch("/login_user", {
+        const username = input ;
+        const response = await fetch("/login_user", {
             method: "POST",
             headers: {
                 'Content-Type' : 'application/json'
             },
-            body: JSON.stringify(username)
+            body: JSON.stringify({username: username})
         })
         
         if (response.ok){
-            console.log("user input worked!")
+            alert("user input worked!")
         }
     }
 
     return (
         <div>
             <h1>Login</h1>
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
 
             <form>
                 <label htmlFor="userinput">Username:</label>

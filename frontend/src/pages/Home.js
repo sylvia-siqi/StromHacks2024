@@ -27,7 +27,8 @@ const Home = () => {
     return (
     <div>
         <h1>Home</h1>
-        <Link to="/login">Login</Link>
+        <Link to="/">Login</Link>
+        <Link to="/addgoal">Add Goal</Link>
 
         <h2>Welcome, {user.username}</h2>
         <p>ID: {user.id}</p>
