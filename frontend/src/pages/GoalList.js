@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Goal from "./Goal";
 
 const GoalList = ({updateProgress}) => {
-    const [goals, setGoals] = useState([]);
+    const [goals, setGoals] = useState([
+      ["1", "username", "May 18th 2024", "20 mins swimming", "Active Time"],
+      ["2", "username", "May 14th 2024", "8 hrs nightly", "Sleep"],
+      ["3", "username", "Feb 18th 2022", "20 mins yoga", "Active Time"],
+      ["4", "username", "Feb 13th 2022", "10k", "Steps"]
+      ]);
 
-    async function getGoals() {
+/*     async function getGoals() {
       const response = await fetch("/goals", {
           method: "POST",
           headers: {
@@ -20,11 +25,11 @@ const GoalList = ({updateProgress}) => {
           await response.json()
               .then(data => setGoals(data))
       }
-  }
+  } */
 
-    useEffect(() => {
+/*     useEffect(() => {
       getGoals();
-    }, [])
+    }, []) */
   
     return (
       <div style={{ padding: '1.5rem', border: '1px solid #ccc', borderRadius: '1.5rem', background:"#fff" }}>

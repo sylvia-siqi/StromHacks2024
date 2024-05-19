@@ -12,7 +12,7 @@ import decorImgActive from '../img/active_confetti.png';
 import decorEnergized from '../img/active_energized.png';
 import decorBlank from '../img/blank_decor.png';
 
-async function getActiveTimeData(userID) {
+/* async function getActiveTimeData(userID) {
     const response = await fetch("/active-time", {
         method: "POST",
         headers: {
@@ -41,7 +41,7 @@ async function getProgressData(userID) {
         const data = await response.json();
         return data;
     }
-}
+} */
 
 const Home = () => {
 
@@ -113,21 +113,6 @@ const Home = () => {
         const userID = localStorage.getItem('user_id');
         setUserID(userID);
         getUser();
-        getSleepData();
-        
-        async function fetchData() {
-            //const userData = await getUser(userID);
-            const sleepData = await getSleepData(userID);
-            const activeTimeData = await getActiveTimeData(userID);
-            
-            //setUser(userData);
-            //setSleepData(sleepData);
-            //setActiveTimeData(activeTimeData);
-        }
-
-        if (userID) {
-            fetchData();
-        }
     }, []);
 
     return (
