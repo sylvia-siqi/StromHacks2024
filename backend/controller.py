@@ -32,6 +32,18 @@ class CreateUser(Resource):
         conn.commit()
         conn.close()
         return jsonify(user_id=user_id)
+    
+class SetBreed(Resource):
+    def put(self):
+        json = request.get_json(force=True)
+        user_id = json['user_id']
+        cat_breed = json['cat_breed']
+
+        conn = get_db_connection()
+        conn.execute('UPDATE User SET cat_breed = ? WHERE user_id = ?', (cat_breed, user_id))
+        conn.commit()
+        conn.close()
+        return jsonify(user_id=user_id, cat_breed=cat_breed)
 
 class GoalList(Resource):
     def get(self):
@@ -95,6 +107,7 @@ api.add_resource(GetGoal, '/goals/<string:goal_id>')
 api.add_resource(GoalList, '/goals')
 api.add_resource(CreateGoal, '/create_goal')
 api.add_resource(CompleteGoal, '/complete_goal')
+api.add_resource(SetBreed, '/set_breed')
 
 
 if __name__ == '__main__':
