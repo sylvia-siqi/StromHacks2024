@@ -8,7 +8,7 @@ CREATE TABLE User (
 );
 
 CREATE TABLE Goal (
-    goal_id INTEGER PRIMARY KEY,
+    goal_id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,    
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     goal_text TEXT,
