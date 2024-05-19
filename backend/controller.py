@@ -9,7 +9,7 @@ api = Api(app)
 # cors = CORS(app, supports_credentials=True)
 
 def get_db_connection():
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('backend/database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -35,6 +35,18 @@ class CreateUser(Resource):
         conn.commit()
         conn.close()
         return jsonify(user_id=user_id)
+    
+class SetName(Resource):
+    def put(self):
+        json = request.get_json(force=True)
+        user_id = json['user_id']
+        cat_name = json['cat_name']
+
+        conn = get_db_connection()
+        conn.execute('UPDATE User SET cat_name = ? WHERE user_id = ?', (cat_name, user_id))
+        conn.commit()
+        conn.close()
+        return jsonify(user_id=user_id, cat_name=cat_name)
     
 class SetBreed(Resource):
     def put(self):
@@ -221,10 +233,12 @@ api.add_resource(GoalList, '/goals')
 api.add_resource(CreateGoal, '/create_goal')
 api.add_resource(CompleteGoal, '/complete_goal')
 api.add_resource(SetBreed, '/set_breed')
+api.add_resource(SetName, '/set_name')
 api.add_resource(GetMood, '/mood')
 api.add_resource(GetSleep, '/sleep')
 api.add_resource(GetActiveTime, '/active_time')
 api.add_resource(GetSteps, '/steps')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
+#
