@@ -1,0 +1,22 @@
+h1.home{
+    font-size: 1.25rem;
+}
+
+body.home{
+    padding: 0;
+    margin: 0;
+}
+
+.padding-m{
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+}
+
+input.largerCheckbox {
+    accent-color: #76c7c0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+    margin-left: 2rem;
+}
