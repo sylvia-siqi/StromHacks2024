@@ -7,25 +7,6 @@ import catImg from '../img/black_cat.png';
 const Login = () => {
     const [input, setInput] = useState("");
 
-/*     async function handleSubmit(e) {
-        e.preventDefault();
-        const username = input ;
-        const response = await fetch("/login_user", {
-            method: "POST",
-            headers: {
-                'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify({username: username})
-        })
-        debugger;
-        if (response.ok){
-            localStorage.setItem('user_id', (await response.json()).user_id);
-            window.location.href = '/home';
-        } else {
-            alert("Login failed!  Check the server logs!")
-        }
-    } */
-
     async function handleSubmit(e) {
         e.preventDefault();
 

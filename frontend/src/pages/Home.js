@@ -32,6 +32,14 @@ const Home = () => {
         }
     }
 
+    function increaseProgress() {
+        setProgress(progress + 10);
+    }
+
+    function petCat() {
+        
+    }
+
     useEffect(() => {
         setUserID(localStorage.getItem('user_id'));
         getUser();
@@ -51,11 +59,15 @@ const Home = () => {
             <button onClick={() => setProgress(progress - 10)} style={{ margin: '10px' }}>
                 Decrease
             </button> */}
-            <img style={{margin:"2rem", width:"80%"}} src={catImg} alt=""></img>
+            <div>
+                <img style={{margin:"2rem", width:"80%"}} src={catImg} alt=""></img>
+
+                <button style={{position:"absolute", top:"500px"}} onClick={petCat}>Pet</button>
+            </div>
 
         </div>
 
-        <GoalList />
+        <GoalList updateProgress={increaseProgress} />
     </div>
     );
   };
