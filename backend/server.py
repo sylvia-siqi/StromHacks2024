@@ -1,25 +1,33 @@
 # Import flask and datetime module for showing date and time
-from flask import Flask
-import datetime
- 
-x = datetime.datetime.now()
+from flask import Flask, request
+
+user = {
+    "id": "",
+    "username": ""
+}
  
 # Initializing flask app
 app = Flask(__name__)
  
- 
 # Route for seeing a data
-@app.route('/data')
-def get_time():
+@app.route('/user')
+def get_user():
  
     # Returning an api for showing in  reactjs
     return {
-        'Name':"geek", 
-        "Age":"22",
-        "Date":x, 
-        "programming":"python"
+        "id": user["id"],
+        "username": user["username"]
         }
- 
+
+@app.route('/login_user/', methods=['POST'])
+def login_user():
+    print("backend reached!")
+    
+    user_data = request.get_json()
+    #user["id"] = user_data["id"]
+    user["username"] = user_data["username"]
+    return
+
      
 # Running app
 if __name__ == '__main__':
