@@ -1,5 +1,5 @@
 # Import flask and datetime module for showing date and time
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 user = {
     "id": "",
@@ -8,7 +8,7 @@ user = {
  
 # Initializing flask app
 app = Flask(__name__)
- 
+
 # Route for seeing a data
 @app.route('/user')
 def get_user():
@@ -19,14 +19,13 @@ def get_user():
         "username": user["username"]
         }
 
-@app.route('/login_user/', methods=['POST'])
+@app.route('/login_user', methods=['POST'])
 def login_user():
-    print("backend reached!")
-    
+    response = jsonify({'some': 'data'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
     user_data = request.get_json()
-    #user["id"] = user_data["id"]
     user["username"] = user_data["username"]
-    return
+    return response
 
      
 # Running app
