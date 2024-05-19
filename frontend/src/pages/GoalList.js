@@ -13,6 +13,23 @@ const GoalList = () => {
     //     .catch(error => console.error('Error fetching goals:', error));
     // }, []);
 
+    async function getGoals() {
+      const response = await fetch("/goals", {
+          method: "POST",
+          headers: {
+              'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify({
+              user_id: localStorage.getItem('user_id')
+          })
+      })
+      
+      if (response.ok){
+          await response.json()
+              .then(data => setGoals(data))
+      }
+  }
+
     // Hardcoded goals for testing purposes
     const [goals, setGoals] = useState([
         { id: 1, name: 'Learn React', completed: false },
@@ -36,6 +53,10 @@ const GoalList = () => {
         })
         .catch(error => console.error('Error updating goal:', error));
     };
+
+    useEffect(() => {
+      getGoals();
+    }, [])
   
     return (
       <div style={{ padding: '1.5rem', border: '1px solid #ccc', borderRadius: '1.5rem', background:"#fff" }}>
@@ -43,7 +64,7 @@ const GoalList = () => {
         {goals.map(goal => (
           <Goal key={goal.id} goal={goal} onToggle={handleToggleGoal} />
         ))}
-        <Link class="padding-m button-link" to="/addgoal">Add Goal</Link>
+        <Link className="padding-m button-link" to="/addgoal">Add Goal</Link>
       </div>
     );
   };

@@ -14,6 +14,16 @@ def get_db_connection():
     return conn
 
 class GetUser(Resource):
+    # def post(self, user_id):
+    #     conn = get_db_connection()
+    #     cur = conn.cursor()
+    #     cur.execute("SELECT * FROM User WHERE user_id = ?", (user_id,))
+    #     rows = cur.fetchall()
+    #     conn.close()
+    #     results = [tuple(row) for row in rows]
+    #     print(f"{type(results)} of type {type(results[0])}")
+    #     userJSON = json.dumps(results)
+    #     return userJSON
     def post(self, user_id):
         try:
             # json_data = request.get_json(force=True)
