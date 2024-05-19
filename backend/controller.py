@@ -15,15 +15,25 @@ def get_db_connection():
 
 class GetUser(Resource):
     def post(self, user_id):
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM User WHERE user_id = ?", (user_id,))
-        rows = cur.fetchall()
-        conn.close()
-        results = [tuple(row) for row in rows]
-        print(f"{type(results)} of type {type(results[0])}")
-        userJSON = json.dumps(results)
-        return userJSON
+        try:
+            # json_data = request.get_json(force=True)
+            # user_id = json_data['user_id']
+            conn = get_db_connection()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM User WHERE user_id = ?", (user_id,))
+            rows = cur.fetchall()
+            conn.close()
+            results = [tuple(row) for row in rows]
+            # print(f"{type(results)} of type {type(results[0])}")
+            # goalsJSON = json.dumps(results)
+            response = jsonify(results)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+        except Exception as e:
+            print(e)
+            response = jsonify(e)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
     
 class CreateUser(Resource):
     def put(self):
@@ -75,7 +85,7 @@ class GoalList(Resource):
             # goalsJSON = json.dumps(results)
             response = jsonify(results)
             response.headers.add('Access-Control-Allow-Origin', '*')
-            return response;
+            return response
         except Exception as e:
             print(e)
             response = jsonify(e)
