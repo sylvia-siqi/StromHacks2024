@@ -1,3 +1,74 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Syne:wght@400..800&display=swap'); 
+@import url(''); 
+
+
+body {  
+font-family:  "Inter", sans-serif;
+font-optical-sizing: auto;
+font-style: normal;
+color:#282c34;
+padding-left: 3rem;
+padding-right: 3rem;
+background-color: #EFEFEF;
+}
+
+label{
+    color:#525D70;
+    font-size: 1.25rem;
+}
+
+input{
+    padding: 1.5rem;
+    stroke-width: 0;
+    border-width: 0 ;
+    border-radius: 1rem;
+    margin-top: .5rem;
+}
+
+h1{
+  font-weight: bold;
+  color:#525D70;
+}
+
+.margin-s{
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.top-item{
+    padding-top: 5rem;
+}
+.txt-2{
+    font-size: 1.25rem;
+}
+
+.accent-font{
+    font-family:  "Nunito", sans-serif;
+}
+
+.center-align{
+    align-items: center;
+    text-align: center;
+}
+
+button, .button-link{
+    text-align: center;
+    width: 100%;
+    padding: 1rem;
+    background-color:#FFBF47 ;
+    border-radius: 1rem;
+    font-family:  "Nunito", sans-serif;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    font-size: 1.5rem;
+    border-width: 0;
+}
+
+
+.flex-col{
+  display: flex;
+  flex-direction: column;
+}
