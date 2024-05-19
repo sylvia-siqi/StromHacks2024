@@ -20,7 +20,6 @@ const Login = () => {
         debugger;
         if (response.ok){
             localStorage.setItem('user_id', (await response.json()).user_id);
-            alert("Login success!")
             window.location.href = '/home';
         } else {
             alert("Login failed!  Check the server logs!")

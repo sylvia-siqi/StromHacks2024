@@ -14,7 +14,7 @@ def get_db_connection():
     return conn
 
 class GetUser(Resource):
-    def get(self, user_id):
+    def post(self, user_id):
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("SELECT * FROM User WHERE user_id = ?", (user_id,))
@@ -213,7 +213,6 @@ class Login(Resource):
         
 
 api.add_resource(Login, "/login_user")
-api.add_resource(User, "/user")
 api.add_resource(CreateUser, '/create_user')
 api.add_resource(GetUser, '/user/<string:user_id>')
 api.add_resource(GetGoal, '/goals/<string:goal_id>')
