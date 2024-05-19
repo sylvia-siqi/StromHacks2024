@@ -99,7 +99,90 @@ class CompleteGoal(Resource):
         conn.commit()
         conn.close()
         return jsonify(goal_id=goal_id, complete=complete)
+    
+class GetMood(Resource):
+    def get(self):
+        json_data = request.get_json(force=True)
+        user_id = json_data['user_id']
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''SELECT u.user_id, COUNT(h.complete) AS total_num,
+                    SUM(CASE WHEN h.complete = 1 THEN 1 ELSE 0 END
+                    ) AS num_complete
+                    FROM User u INNER JOIN Goal g ON (u.user_id = g.user_id)
+                    INNER JOIN GoalHistory h ON (g.goal_id = h.goal_id)
+                    WHERE g.date_created > DATE('now', '-14 days');''')
+        row = cur.fetchall()
+        conn.close()
+        results = [tuple(row) for row in row] #(user_id, total_num, num_complete)
+        print(results)
+        percentage = results[0][2]/results[0][1] * 100
         
+        return jsonify(percentage)
+    
+class GetSleep(Resource):
+    def get(self):
+        json_data = request.get_json(force=True)
+        user_id = json_data['user_id']
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''SELECT u.user_id, COUNT(h.complete) AS total_num,
+                    SUM(CASE WHEN h.complete = 1 THEN 1 ELSE 0 END
+                    ) AS num_complete
+                    FROM User u INNER JOIN Goal g ON (u.user_id = g.user_id)
+                    INNER JOIN GoalHistory h ON (g.goal_id = h.goal_id)
+                    WHERE g.category = 'Sleep' AND g.date_created > DATE('now', '-14 days');''')
+        row = cur.fetchall()
+        conn.close()
+        results = [tuple(row) for row in row] #(user_id, total_num, num_complete)
+        print(results)
+        percentage = results[0][2]/results[0][1] * 100
+        
+        return jsonify(percentage)
+        
+class GetActiveTime(Resource):
+    def get(self):
+        json_data = request.get_json(force=True)
+        user_id = json_data['user_id']
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''SELECT u.user_id, COUNT(h.complete) AS total_num,
+                    SUM(CASE WHEN h.complete = 1 THEN 1 ELSE 0 END
+                    ) AS num_complete
+                    FROM User u INNER JOIN Goal g ON (u.user_id = g.user_id)
+                    INNER JOIN GoalHistory h ON (g.goal_id = h.goal_id)
+                    WHERE g.category = 'Active Time' AND g.date_created > DATE('now', '-14 days');''')
+        row = cur.fetchall()
+        conn.close()
+        results = [tuple(row) for row in row] #(user_id, total_num, num_complete)
+        print(results)
+        percentage = results[0][2]/results[0][1] * 100
+        
+        return jsonify(percentage)
+
+class GetSteps(Resource):
+    def get(self):
+        json_data = request.get_json(force=True)
+        user_id = json_data['user_id']
+
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''SELECT u.user_id, COUNT(h.complete) AS total_num,
+                    SUM(CASE WHEN h.complete = 1 THEN 1 ELSE 0 END
+                    ) AS num_complete
+                    FROM User u INNER JOIN Goal g ON (u.user_id = g.user_id)
+                    INNER JOIN GoalHistory h ON (g.goal_id = h.goal_id)
+                    WHERE g.category = 'Steps' AND g.date_created > DATE('now', '-14 days');''')
+        row = cur.fetchall()
+        conn.close()
+        results = [tuple(row) for row in row] #(user_id, total_num, num_complete)
+        print(results)
+        percentage = results[0][2]/results[0][1] * 100
+        
+        return jsonify(percentage)
 
 api.add_resource(CreateUser, '/create_user')
 api.add_resource(GetUser, '/user/<string:user_id>')
@@ -108,7 +191,12 @@ api.add_resource(GoalList, '/goals')
 api.add_resource(CreateGoal, '/create_goal')
 api.add_resource(CompleteGoal, '/complete_goal')
 api.add_resource(SetBreed, '/set_breed')
-
+api.add_resource(GetMood, '/mood')
+api.add_resource(GetSleep, '/sleep')
+api.add_resource(GetActiveTime, '/active_time')
+api.add_resource(GetSteps, '/steps')
 
 if __name__ == '__main__':
     app.run(debug=False)
+
+    # todo: delete goal
