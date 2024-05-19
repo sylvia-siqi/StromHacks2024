@@ -85,3 +85,26 @@ button, .button-link{
   display: flex;
   flex-direction: column;
 }
+
+
+  /* Dropdown button */
+  .dropdown-button {
+    background-color: white;
+    color: rgb(87, 87, 87);
+    padding: .7rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: .75rem;
+    cursor: pointer;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: .5rem;
+    
+  }
+  
+  .dropdown-item:hover{
+    max-width: 80%;
+    background-color: #461e1e;
+  }

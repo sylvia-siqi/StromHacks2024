@@ -62,18 +62,20 @@ const AddGoal = () => {
     }, []); */
 
     return (
-    <div>
+    <div class="padding-m">
+        <br></br>
         <h1 className="text-3xl">Add Goal!</h1>
-        <Link to="/">Login</Link>
 
         <form className="flex flex-col items-center w-[80vw]">
             <label htmlFor="input-category">Category:</label>
-            <select name="input-category" id="input-category" onChange={e => setCategory(e.target.value)}>
-                <option value=''></option>
-                <option value="Sleep">Sleep</option>
-                <option value="Active Time">Active Time</option>
-                <option value="Steps">Steps</option>
+            <select name="input-category" class="dropdown-button" id="input-category" onChange={e => setCategory(e.target.value)}>
+                <option class="dropdown-item" value=''></option>
+                <option class="dropdown-item"value="Sleep">Sleep</option>
+                <option class="dropdown-item" value="Active Time">Active Time</option>
+                <option class="dropdown-item" value="Steps">Steps</option>
             </select>
+
+            <br></br>
 
             <label htmlFor="input-goal">Description:</label>
                 <input type="text" id="input-goal" value={goalText}
@@ -81,6 +83,8 @@ const AddGoal = () => {
 
             <button type="submit" onClick={handleSubmit}>Create</button>
         </form>
+        <br></br>
+        <Link to="/Home">Return Home</Link>
     </div>
     );
   };
