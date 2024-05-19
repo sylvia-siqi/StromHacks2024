@@ -1,5 +1,6 @@
 h1.home{
     font-size: 1.25rem;
+    margin-top: 2rem;
 }
 
 body.home{
@@ -20,3 +21,18 @@ input.largerCheckbox {
     border-radius: 100%;
     margin-left: 2rem;
 }
+
+.catImgGroup {
+    position: relative;
+    width: 80%; /* Adjust as necessary */
+    margin: 2rem auto; /* Center the container */
+    height: 20rem;
+  }
+  
+  .catImgGroup img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Ensure all images are the same size */
+    margin: 0; /* Remove individual image margins */
+  }
