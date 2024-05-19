@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json
 from flask_restful import Api, Resource
 import sqlite3
 
@@ -12,14 +12,19 @@ def get_db_connection():
 
 class GoalList(Resource):
     def get(self):
-        json = request.get_json(force=True)
-        user_id = json['user_id']
+        json_data = request.get_json(force=True)
+        user_id = json_data['user_id']
 
         conn = get_db_connection()
-        goals = conn.execute('SELECT * FROM Goal WHERE user_id = user_id').fetchall()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM Goal WHERE user_id = ?", (user_id,))
+        rows = cur.fetchall()
         conn.close()
-        
-        return goals
+        results = [tuple(row) for row in rows]
+        print(f"{type(results)} of type {type(results[0])}")
+        goalsJSON = json.dumps(results)
+
+        return goalsJSON
     
 class GetGoal(Resource):
     def get(self, goal_id):
@@ -41,8 +46,7 @@ class CreateGoal(Resource):
         conn.commit()
         conn.close()
         return jsonify(user_id=user_id, goal_text=goal_text, category=category)
-        # return {goal_id: goals[goal_id], user_id: user_id, goal_text: goal_text, category: category}
-
+        
          
 api.add_resource(GetGoal, '/goals/<string:goal_id>')
 api.add_resource(GoalList, '/goals')
