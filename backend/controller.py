@@ -16,16 +16,12 @@ def get_db_connection():
 class GetUser(Resource):
     def post(self, user_id):
         try:
-            # json_data = request.get_json(force=True)
-            # user_id = json_data['user_id']
             conn = get_db_connection()
             cur = conn.cursor()
             cur.execute("SELECT * FROM User WHERE user_id = ?", (user_id,))
             rows = cur.fetchall()
             conn.close()
             results = [tuple(row) for row in rows]
-            # print(f"{type(results)} of type {type(results[0])}")
-            # goalsJSON = json.dumps(results)
             response = jsonify(results)
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
@@ -93,16 +89,22 @@ class GoalList(Resource):
             return response
     
 class GetGoal(Resource):
-    def get(self, goal_id):
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM Goal WHERE goal_id = ?", (goal_id,))
-        rows = cur.fetchall()
-        conn.close()
-        results = [tuple(row) for row in rows]
-        print(f"{type(results)} of type {type(results[0])}")
-        goalJSON = json.dumps(results)
-        return goalJSON
+    def post(self, goal_id):
+        try:
+            conn = get_db_connection()
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM Goal WHERE goal_id = ?", (goal_id,))
+            rows = cur.fetchall()
+            conn.close()
+            results = [tuple(row) for row in rows]
+            response = jsonify(results)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+        except Exception as e:
+            print(e)
+            response = jsonify(e)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
 
 class CreateGoal(Resource):
     def put(self):
