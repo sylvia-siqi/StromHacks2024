@@ -10,6 +10,29 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+class GetUser(Resource):
+    def get(self, user_id):
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM User WHERE user_id = ?", (user_id,))
+        rows = cur.fetchall()
+        conn.close()
+        results = [tuple(row) for row in rows]
+        print(f"{type(results)} of type {type(results[0])}")
+        userJSON = json.dumps(results)
+        return userJSON
+    
+class CreateUser(Resource):
+    def put(self):
+        json = request.get_json(force=True)
+        user_id = json['user_id']
+
+        conn = get_db_connection()
+        conn.execute('INSERT INTO User (user_id) VALUES (?)', (user_id,))
+        conn.commit()
+        conn.close()
+        return jsonify(user_id=user_id)
+
 class GoalList(Resource):
     def get(self):
         json_data = request.get_json(force=True)
@@ -52,7 +75,9 @@ class CreateGoal(Resource):
         conn.close()
         return jsonify(user_id=user_id, goal_text=goal_text, category=category)
         
-         
+
+api.add_resource(CreateUser, '/create_user')
+api.add_resource(GetUser, '/user/<string:user_id>')
 api.add_resource(GetGoal, '/goals/<string:goal_id>')
 api.add_resource(GoalList, '/goals')
 api.add_resource(CreateGoal, '/create_goal')
