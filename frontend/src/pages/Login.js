@@ -28,22 +28,15 @@ const Login = () => {
     }
 
     return (
-        <div>
-             <br></br>
-             <br></br>
-             <br></br>
+        <div class="top-item body">
             <div class= "flex-col center-align">
-                <img class="top-item" src={catImg}></img>
+                <img src={catImg}></img>
                 <h1 class="accent-font margin-s">FitCat</h1>
                 <p class="accent-font txt-2 margin-s">Hit your fitness goals with your virtual cat!</p>
             </div>
 
-            <br></br>
-            <br></br>
-            <br></br>
-
             <form className="flex-col">
-                <label htmlFor="userinput">Enter your ID</label>
+                <label class="top-item" htmlFor="userinput">Enter your ID</label>
                 <input type="text" id="userinput" value={input}
                     onChange={e => setInput(e.target.value)} />
 
@@ -51,7 +44,7 @@ const Login = () => {
                     onClick={handleSubmit}
                 >LOGIN</button>
             </form>
-            <p>Or <Link to="/">create a new account</Link> and start raising your cat!</p>
+            <p>Or <Link to="/Home">create a new account</Link> and start raising your cat!</p>
 
 
         </div>
