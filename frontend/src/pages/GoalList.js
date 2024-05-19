@@ -4,14 +4,6 @@ import Goal from "./Goal";
 
 const GoalList = ({updateProgress}) => {
     const [goals, setGoals] = useState([]);
-  
-    // useEffect(() => {
-    //   // Fetch goals from the backend when the component mounts
-    //   fetch('/api/goals')
-    //     .then(response => response.json())
-    //     .then(data => setGoals(data))
-    //     .catch(error => console.error('Error fetching goals:', error));
-    // }, []);
 
     async function getGoals() {
       const response = await fetch("/goals", {

@@ -6,8 +6,10 @@ const Goal = ({ goal, updateProgress }) => {
     };
 
     async function submitGoal() {
+      handleCheckboxChange();
+      updateProgress();
 
-      const response = await fetch("/complete_goal", {
+      /* const response = await fetch("/complete_goal", {
           method: "PUT",
           headers: {
               'Content-Type' : 'application/json'
@@ -22,7 +24,7 @@ const Goal = ({ goal, updateProgress }) => {
           updateProgress();
       } else { 
 
-      }
+      } */
   }
   
     return (

@@ -2,17 +2,55 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 import "../index.css";
 import "../home.css";
-import catImg from '../img/black_cat.png';
 import ProgressBar from './ProgressBar';
 import GoalList from './GoalList';
 
+import catImgBase from '../img/black_cat.png';
+import decorImgVerySleepy from '../img/cat_eyes_very_sleepy.png';
+import decorImgSleepy from '../img/cat_eyes_sleepy.png';
+import decorImgActive from '../img/active_confetti.png';
+import decorEnergized from '../img/active_energized.png';
+import decorBlank from '../img/blank_decor.png';
+
+async function getActiveTimeData(userID) {
+    const response = await fetch("/active-time", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user_id: localStorage.getItem('user_id')
+        })
+    });
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    }
+}
+async function getProgressData(userID) {
+    const response = await fetch("/mood", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user_id: localStorage.getItem('user_id')
+        })
+    });
+    if (response.ok) {
+        const data = await response.json();
+        return data;
+    }
+}
+
 const Home = () => {
 
-    //data needs update!!!
-    const [progress, setProgress] = useState(50);
-
     const [userID, setUserID] = useState("");
-    //const [user, setUser] = useState([]);
+    const [user, setUser] = useState([]);
+
+    const [sleepData, setSleepData] = useState(null);
+    const [activeTimeData, setActiveTimeData] = useState(null);
+    const [progress, setProgress] = useState(0);
 
     async function getUser() {
         const response = await fetch(`/user/${localStorage.getItem('user_id')}`, {
@@ -26,24 +64,71 @@ const Home = () => {
         })
         if (response.ok){
             await response.json()
-                .then(data => {console.log(data)})
-        } else {
-            console.log(response);
+                .then(data => setUser(data))
+                
+        }
+    }
+
+    async function getSleepData() {
+        const response = await fetch("/sleep", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: localStorage.getItem('user_id')
+            })
+        });
+        if (response.ok) {
+            await response.json()
+                .then(data => setSleepData(data))
         }
     }
 
     function increaseProgress() {
-        setProgress(progress + 10);
+        setProgress(progress + 20);
     }
 
-    function petCat() {
-        
+    function getSleepDecor() {
+        if (progress < 30) {
+          return decorImgVerySleepy;
+        } else if (progress < 60) {
+          return decorImgSleepy;
+        } else {
+          return decorBlank;
+        }
+      };
+
+    const getActiveDecor = (activeStat) => {
+    if (progress < 30) {
+        return decorBlank;
+    } else if (progress < 60) {
+        return decorImgActive;
+    } else {
+        return decorEnergized;
     }
+    };
 
     useEffect(() => {
-        setUserID(localStorage.getItem('user_id'));
+        const userID = localStorage.getItem('user_id');
+        setUserID(userID);
         getUser();
-    }, [])
+        getSleepData();
+        
+        async function fetchData() {
+            //const userData = await getUser(userID);
+            const sleepData = await getSleepData(userID);
+            const activeTimeData = await getActiveTimeData(userID);
+            
+            //setUser(userData);
+            //setSleepData(sleepData);
+            //setActiveTimeData(activeTimeData);
+        }
+
+        if (userID) {
+            fetchData();
+        }
+    }, []);
 
     return (
     <div>
@@ -59,12 +144,12 @@ const Home = () => {
             <button onClick={() => setProgress(progress - 10)} style={{ margin: '10px' }}>
                 Decrease
             </button> */}
-            <div>
-                <img style={{margin:"2rem", width:"80%"}} src={catImg} alt=""></img>
 
-                <button style={{position:"absolute", top:"500px"}} onClick={petCat}>Pet</button>
+            <div className="catImgGroup">
+                <img  src={getActiveDecor(activeTimeData)} alt=""></img>
+                <img  src={catImgBase} alt=""></img>
+                <img  src={getSleepDecor(sleepData)} alt=""></img>
             </div>
-
         </div>
 
         <GoalList updateProgress={increaseProgress} />
