@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS GoalHistory;
 
 CREATE TABLE User (
     user_id INTEGER PRIMARY KEY,
-    breed TEXT DEFAULT "Tabby"
+    cat_breed TEXT DEFAULT "Tabby"
 );
 
 CREATE TABLE Goal (

@@ -17,9 +17,13 @@ const Login = () => {
             },
             body: JSON.stringify({username: username})
         })
-        
+        debugger;
         if (response.ok){
-            alert("user input worked!")
+            localStorage.setItem('user_id', (await response.json()).user_id);
+            alert("Login success!")
+            window.location.href = '/home';
+        } else {
+            alert("Login failed!  Check the server logs!")
         }
     }
 

@@ -1,5 +1,5 @@
-# Import flask and datetime module for showing date and time
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, json
+from flask_restful import Api, Resource
 
 user = {
     "id": "",
@@ -26,7 +26,6 @@ def login_user():
     user_data = request.get_json()
     user["username"] = user_data["username"]
     return response
-
      
 # Running app
 if __name__ == '__main__':
