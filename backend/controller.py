@@ -29,9 +29,14 @@ class GoalList(Resource):
 class GetGoal(Resource):
     def get(self, goal_id):
         conn = get_db_connection()
-        goals = conn.execute('SELECT * FROM Goal WHERE goal_id = goal_id').fetchall()
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM Goal WHERE goal_id = ?", (goal_id,))
+        rows = cur.fetchall()
         conn.close()
-        return goal_id # return {goal_id: goals[goal_id]}
+        results = [tuple(row) for row in rows]
+        print(f"{type(results)} of type {type(results[0])}")
+        goalJSON = json.dumps(results)
+        return goalJSON
 
 class CreateGoal(Resource):
     def put(self):

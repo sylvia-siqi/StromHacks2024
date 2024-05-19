@@ -17,7 +17,7 @@ CREATE TABLE Goal (
 );
 
 CREATE TABLE GoalHistory (
-    instance_id INTEGER PRIMARY KEY,
+    instance_id INTEGER PRIMARY KEY AUTOINCREMENT,
     [date] TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     goal_id INTEGER,
     complete BOOLEAN DEFAULT "0",
