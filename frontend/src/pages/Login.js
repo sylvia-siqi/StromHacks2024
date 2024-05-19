@@ -29,7 +29,7 @@ const Login = () => {
     return (
         <div class="top-item body">
             <div class= "flex-col center-align">
-                <img src={catImg}></img>
+                <img src={catImg} alt=""></img>
                 <h1 class="accent-font margin-s">FitCat</h1>
                 <p class="accent-font txt-2 margin-s">Hit your fitness goals with your virtual cat!</p>
             </div>

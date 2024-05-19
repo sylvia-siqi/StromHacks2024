@@ -226,4 +226,4 @@ api.add_resource(GetActiveTime, '/active_time')
 api.add_resource(GetSteps, '/steps')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
