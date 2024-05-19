@@ -134,25 +134,30 @@ class CompleteGoal(Resource):
         return jsonify(goal_id=goal_id, complete=complete)
     
 class GetMood(Resource):
-    def get(self):
-        json_data = request.get_json(force=True)
-        user_id = json_data['user_id']
-
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute('''SELECT u.user_id, COUNT(h.complete) AS total_num,
+    def post(self):
+        try:
+            json_data = request.get_json(force=True)
+            user_id = json_data['user_id']
+            conn = get_db_connection()
+            cur = conn.cursor()
+            cur.execute('''SELECT u.user_id, COUNT(h.complete) AS total_num,
                     SUM(CASE WHEN h.complete = 1 THEN 1 ELSE 0 END
                     ) AS num_complete
                     FROM User u INNER JOIN Goal g ON (u.user_id = g.user_id)
                     INNER JOIN GoalHistory h ON (g.goal_id = h.goal_id)
                     WHERE g.date_created > DATE('now', '-14 days');''')
-        row = cur.fetchall()
-        conn.close()
-        results = [tuple(row) for row in row] #(user_id, total_num, num_complete)
-        print(results)
-        percentage = results[0][2]/results[0][1] * 100
-        
-        return jsonify(percentage)
+            rows = cur.fetchall()
+            conn.close()
+            results = [tuple(row) for row in rows]
+            # response = jsonify(results)
+            response = jsonify(results[0][2]/results[0][1] * 100)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+        except Exception as e:
+            print(e)
+            response = jsonify(e)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
     
 class GetSleep(Resource):
     def get(self):
