@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "../App.css";
+import "../index.css";
+import catImg from '../img/black_cat.png';
 
 const Login = () => {
     const [input, setInput] = useState("");
@@ -17,7 +20,6 @@ const Login = () => {
         debugger;
         if (response.ok){
             localStorage.setItem('user_id', (await response.json()).user_id);
-            alert("Login success!")
             window.location.href = '/home';
         } else {
             alert("Login failed!  Check the server logs!")
@@ -25,19 +27,25 @@ const Login = () => {
     }
 
     return (
-        <div>
-            <h1>Login</h1>
-            <Link to="/home">Home</Link>
+        <div class="top-item body">
+            <div class= "flex-col center-align">
+                <img src={catImg} alt=""></img>
+                <h1 class="accent-font margin-s">FitCat</h1>
+                <p class="accent-font txt-2 margin-s">Hit your fitness goals with your virtual cat!</p>
+            </div>
 
-            <form>
-                <label htmlFor="userinput">Username:</label>
+            <form className="flex-col">
+                <label class="top-item" htmlFor="userinput">Enter your ID</label>
                 <input type="text" id="userinput" value={input}
                     onChange={e => setInput(e.target.value)} />
 
-                <button type="submit" 
+                <button  type="submit" 
                     onClick={handleSubmit}
-                >Login</button>
+                >LOGIN</button>
             </form>
+            <p>Or <Link to="/Home">create a new account</Link> and start raising your cat!</p>
+
+
         </div>
         );
   };
